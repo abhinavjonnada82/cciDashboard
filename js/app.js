@@ -193,6 +193,7 @@ $(document).ready(function(){
     targetAgeGroupDataProcess(data)
     targetGenderDataProcess(data)
     targetInsuranceDataProcess(data)
+    targetAdmissionDataProcess(data)
   }
 
   function targetAgeGroupDataProcess(data) {
@@ -237,7 +238,9 @@ $(document).ready(function(){
                     beginAtZero: true
                 }
             }]
-        }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
     }
 });
 
@@ -270,6 +273,10 @@ console.log('mc!', myChart)
         'M'
     ] 
       },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+    }
   });
   console.log('mc1!', myPieChart)
   
@@ -306,7 +313,6 @@ console.log('mc!', myChart)
       secondaryInsuranceHolder[3] += 1
     }
 }
-  console.log("insurance holder", secondaryInsuranceHolder)
   let ctx2 = $('#myChart2');
   var myRadarChart = new Chart(ctx2, {
     type: 'radar',
@@ -336,9 +342,52 @@ console.log('mc!', myChart)
                 suggestedMin: 5,
                 suggestedMax: 10
             }
-        }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
     }
 });
 console.log('mc2!', myRadarChart)
   }
+
+function targetAdmissionDataProcess(data) {
+    admissionHolder = [0,0]
+    for (i = 0; i < data.length; i++) {
+      if (data[i].type_of_admission === 'Emergency') {
+        admissionHolder[0] += 1
+      }
+      else if (data[i].type_of_admission === 'Elective') {
+        admissionHolder[1] += 1
+      }
+  }
+  console.log('ah', admissionHolder)
+  let ctx3 = $('#myChart3');
+  var myPieChart = new Chart(ctx3, {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: admissionHolder,
+        backgroundColor: [
+          'rgba(255,0,0,0.2)',
+          'rgba(255,255,0,0.2)'
+      ],
+    }],
+    labels: [
+      'Emergency',
+      'Elective'
+  ] 
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+  }
+});
+  
+
+
+
+
+}
+
+
 })
