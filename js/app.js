@@ -69,7 +69,7 @@ const testData = [
         "length_of_stay": "4",
         "operating_certificate_number": "0228000",
         "patient_disposition": "Home or Self Care",
-        "payment_typology_1": "Medicare",
+        "payment_typology_1": "Blue Cross",
         "payment_typology_2": "Medicare",
         "payment_typology_3": "Medicaid",
         "race": "White",
@@ -142,7 +142,7 @@ const testData = [
                 "length_of_stay": "4",
                 "operating_certificate_number": "0228000",
                 "patient_disposition": "Home or Self Care",
-                "payment_typology_1": "Medicare",
+                "payment_typology_1": "Private Insurance",
                 "payment_typology_2": "Medicare",
                 "payment_typology_3": "Medicaid",
                 "race": "White",
@@ -172,7 +172,7 @@ $(document).ready(function(){
   // });
   // });
   $("button").click(function(){
-   // processData(testData)
+    //processData(testData)
     let url = `https://health.data.ny.gov/resource/gnzp-ekau.json?$where=UPPER(ccs_diagnosis_description) like '%25CANCER%25'&$limit=20`;
       console.log('url', url)
       fetch(url, {
@@ -192,6 +192,7 @@ $(document).ready(function(){
     console.log('process', data)
     targetAgeGroupDataProcess(data)
     targetGenderDataProcess(data)
+    targetInsuranceDataProcess(data)
   }
 
   function targetAgeGroupDataProcess(data) {
@@ -272,5 +273,72 @@ console.log('mc!', myChart)
   });
   console.log('mc1!', myPieChart)
   
+  }
+
+  function targetInsuranceDataProcess(data) {
+    insuranceHolder = [0,0,0,0]
+    secondaryInsuranceHolder = [0,0,0,0]
+    for (i = 0; i < data.length; i++) {
+      if (data[i].payment_typology_1 === 'Medicare') {
+        insuranceHolder[0] += 1
+      }
+      else if (data[i].payment_typology_1 === 'Blue Cross/Blue Shield') {
+        insuranceHolder[1] += 1
+      }
+      else if (data[i].payment_typology_1 === 'Private Health Insurance') {
+        insuranceHolder[2] += 1
+      }
+      else {
+        insuranceHolder[3] += 1
+      }
+  }
+  for (i = 0; i < data.length; i++) {
+    if (data[i].payment_typology_2 && data[i].payment_typology_2 === 'Medicare') {
+      secondaryInsuranceHolder[0] += 1
+    }
+    else if (data[i].payment_typology_2 && data[i].payment_typology_2 === 'Blue Cross/Blue Shield') {
+      secondaryInsuranceHolder[1] += 1
+    }
+    else if (data[i].payment_typology_2 && data[i].payment_typology_2 === 'Private Health Insurance') {
+      secondaryInsuranceHolder[2] += 1
+    }
+    else {
+      secondaryInsuranceHolder[3] += 1
+    }
+}
+  console.log("insurance holder", secondaryInsuranceHolder)
+  let ctx2 = $('#myChart2');
+  var myRadarChart = new Chart(ctx2, {
+    type: 'radar',
+    data: {
+      labels: ['Medicare', 'Blue Cross/Blue Shield', 'Private Health Insurance', 'Other'],
+      datasets: [{
+        label: 'Payment Typology 1',
+        data: insuranceHolder,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+      ],
+    },
+    {
+      label: 'Payment Typology 2',
+      data: secondaryInsuranceHolder,
+      backgroundColor: [
+        'rgba(0, 255, 00, 0.1)' ],
+  }]
+   },
+
+   options : {
+        scale: {
+            angleLines: {
+                display: false
+            },
+            ticks: {
+                suggestedMin: 5,
+                suggestedMax: 10
+            }
+        }
+    }
+});
+console.log('mc2!', myRadarChart)
   }
 })
