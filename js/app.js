@@ -1,157 +1,8 @@
 
-const AUTH_TOKEN = 'LP84l7c8EfxIN4x3xJE5cfZjI';
-const SECRET_TOKEN = 'PRDWsMDGmw6jgBvTR-rLOIL2GjC7acZfJtM4';
-const baseURL = 'https://soda.demo.socrata.com/oauth/access_token'
-const redirectUri = 'https://localhost:8080/callback'
-
-const testData = [
-	{
-	"abortion_edit_indicator": "N",
-	"age_group": "70 or Older",
-	"apr_drg_code": "281",
-	"apr_drg_description": "Malignancy of hepatobiliary system & pancreas",
-	"apr_mdc_code": "7",
-	"apr_mdc_description": "Diseases and Disorders of the Hepatobiliary System and Pancreas",
-	"apr_medical_surgical_description": "Medical",
-	"apr_risk_of_mortality": "Major",
-	"apr_severity_of_illness_code": "2",
-	"apr_severity_of_illness_description": "Moderate",
-	"birth_weight": "0",
-	"ccs_diagnosis_code": "17",
-	"ccs_diagnosis_description": "Cancer of pancreas",
-	"ccs_procedure_code": "0",
-	"ccs_procedure_description": "NO PROC",
-	"discharge_year": "2016",
-	"emergency_department_indicator": "Y",
-	"ethnicity": "Not Span/Hispanic",
-	"facility_id": "39",
-	"facility_name": "Memorial Hosp of Wm F & Gertrude F Jones A/K/A Jones Memorial Hosp",
-	"gender": "M",
-	"health_service_area": "Western NY",
-	"hospital_county": "Allegany",
-	"length_of_stay": "4",
-	"operating_certificate_number": "0228000",
-	"patient_disposition": "Home or Self Care",
-	"payment_typology_1": "Medicare",
-	"payment_typology_2": "Medicare",
-	"payment_typology_3": "Medicaid",
-	"race": "White",
-	"total_charges": "10402.25",
-	"total_costs": "5158.47",
-	"type_of_admission": "Emergency",
-	"zip_code_3_digits": "148"
-	},
-
-    {
-        "abortion_edit_indicator": "N",
-        "age_group": "30 to 49",
-        "apr_drg_code": "281",
-        "apr_drg_description": "Malignancy of hepatobiliary system & pancreas",
-        "apr_mdc_code": "7",
-        "apr_mdc_description": "Diseases and Disorders of the Hepatobiliary System and Pancreas",
-        "apr_medical_surgical_description": "Medical",
-        "apr_risk_of_mortality": "Major",
-        "apr_severity_of_illness_code": "2",
-        "apr_severity_of_illness_description": "Moderate",
-        "birth_weight": "0",
-        "ccs_diagnosis_code": "17",
-        "ccs_diagnosis_description": "Cancer of pancreas",
-        "ccs_procedure_code": "0",
-        "ccs_procedure_description": "NO PROC",
-        "discharge_year": "2016",
-        "emergency_department_indicator": "Y",
-        "ethnicity": "Not Span/Hispanic",
-        "facility_id": "39",
-        "facility_name": "Memorial Hosp of Wm F & Gertrude F Jones A/K/A Jones Memorial Hosp",
-        "gender": "F",
-        "health_service_area": "Western NY",
-        "hospital_county": "Allegany",
-        "length_of_stay": "4",
-        "operating_certificate_number": "0228000",
-        "patient_disposition": "Home or Self Care",
-        "payment_typology_1": "Blue Cross",
-        "payment_typology_2": "Medicare",
-        "payment_typology_3": "Medicaid",
-        "race": "White",
-        "total_charges": "10402.25",
-        "total_costs": "5158.47",
-        "type_of_admission": "Emergency",
-        "zip_code_3_digits": "148"
-        },
-        {
-            "abortion_edit_indicator": "N",
-            "age_group": "70 or Older",
-            "apr_drg_code": "281",
-            "apr_drg_description": "Malignancy of hepatobiliary system & pancreas",
-            "apr_mdc_code": "7",
-            "apr_mdc_description": "Diseases and Disorders of the Hepatobiliary System and Pancreas",
-            "apr_medical_surgical_description": "Medical",
-            "apr_risk_of_mortality": "Major",
-            "apr_severity_of_illness_code": "2",
-            "apr_severity_of_illness_description": "Moderate",
-            "birth_weight": "0",
-            "ccs_diagnosis_code": "17",
-            "ccs_diagnosis_description": "Cancer of pancreas",
-            "ccs_procedure_code": "0",
-            "ccs_procedure_description": "NO PROC",
-            "discharge_year": "2016",
-            "emergency_department_indicator": "Y",
-            "ethnicity": "Not Span/Hispanic",
-            "facility_id": "39",
-            "facility_name": "Memorial Hosp of Wm F & Gertrude F Jones A/K/A Jones Memorial Hosp",
-            "gender": "M",
-            "health_service_area": "Western NY",
-            "hospital_county": "Allegany",
-            "length_of_stay": "4",
-            "operating_certificate_number": "0228000",
-            "patient_disposition": "Home or Self Care",
-            "payment_typology_1": "Medicare",
-            "payment_typology_2": "Medicare",
-            "payment_typology_3": "Medicaid",
-            "race": "White",
-            "total_charges": "10402.25",
-            "total_costs": "5158.47",
-            "type_of_admission": "Emergency",
-            "zip_code_3_digits": "148"
-            },
-	
-            {
-                "abortion_edit_indicator": "N",
-                "age_group": "50 to 69",
-                "apr_drg_code": "281",
-                "apr_drg_description": "Malignancy of hepatobiliary system & pancreas",
-                "apr_mdc_code": "7",
-                "apr_mdc_description": "Diseases and Disorders of the Hepatobiliary System and Pancreas",
-                "apr_medical_surgical_description": "Medical",
-                "apr_risk_of_mortality": "Major",
-                "apr_severity_of_illness_code": "2",
-                "apr_severity_of_illness_description": "Moderate",
-                "birth_weight": "0",
-                "ccs_diagnosis_code": "17",
-                "ccs_diagnosis_description": "Cancer of pancreas",
-                "ccs_procedure_code": "0",
-                "ccs_procedure_description": "NO PROC",
-                "discharge_year": "2016",
-                "emergency_department_indicator": "Y",
-                "ethnicity": "Not Span/Hispanic",
-                "facility_id": "39",
-                "facility_name": "Memorial Hosp of Wm F & Gertrude F Jones A/K/A Jones Memorial Hosp",
-                "gender": "F",
-                "health_service_area": "Western NY",
-                "hospital_county": "Allegany",
-                "length_of_stay": "4",
-                "operating_certificate_number": "0228000",
-                "patient_disposition": "Home or Self Care",
-                "payment_typology_1": "Private Insurance",
-                "payment_typology_2": "Medicare",
-                "payment_typology_3": "Medicaid",
-                "race": "White",
-                "total_charges": "10402.25",
-                "total_costs": "5158.47",
-                "type_of_admission": "Emergency",
-                "zip_code_3_digits": "148"
-                },
-]
+// const AUTH_TOKEN = 'LP84l7c8EfxIN4x3xJE5cfZjI';
+// const SECRET_TOKEN = 'PRDWsMDGmw6jgBvTR-rLOIL2GjC7acZfJtM4';
+// const baseURL = 'https://soda.demo.socrata.com/oauth/access_token'
+// const redirectUri = 'https://localhost:8080/callback'
 
 $(document).ready(function(){
   // $("button").click(function(){
@@ -171,10 +22,8 @@ $(document).ready(function(){
   //     console.log('json', json);
   // });
   // });
-  $("button").click(function(){
-    //processData(testData)
-    let url = `https://health.data.ny.gov/resource/gnzp-ekau.json?$where=UPPER(ccs_diagnosis_description) like '%25CANCER%25'&$limit=20`;
-      console.log('url', url)
+
+    let url = `https://health.data.ny.gov/resource/gnzp-ekau.json?$where=UPPER(ccs_diagnosis_description) like '%25CANCER%25'&$limit=30`;
       fetch(url, {
         method: 'GET',
         headers: {
@@ -186,17 +35,31 @@ $(document).ready(function(){
         console.log('json', json);
         processData(json)
     });
-    });
+ 
 
   function processData(data) {
     console.log('process', data)
-    targetAgeGroupDataProcess(data)
-    targetGenderDataProcess(data)
-    targetInsuranceDataProcess(data)
-    targetAdmissionDataProcess(data)
+    getStatsDataProcess(data)
+    getAgeGroupDataProcess(data)
+    getGenderDataProcess(data)
+    getInsuranceDataProcess(data)
+    getAdmissionDataProcess(data)
+    getCancerTypeDataProcess(data)
   }
 
-  function targetAgeGroupDataProcess(data) {
+  function getStatsDataProcess(data) {
+    $(".content .value").html(data.length);
+    totalCostHolder = 0
+    for (i = 0; i < data.length; i++) {
+      console.log('tc22',(data[i].total_costs))
+      totalCostHolder = totalCostHolder + parseFloat((data[i].total_costs))
+    }
+    console.log('tc',totalCostHolder)
+    $(".content .value1").html(totalCostHolder);
+
+  }
+
+  function getAgeGroupDataProcess(data) {
     ageGroupHolder = [0,0,0]
     for (i = 0; i < data.length; i++) {
       if (data[i].age_group === '30 to 49') {
@@ -216,7 +79,7 @@ $(document).ready(function(){
     data: {
         labels: ['30 to 49', '50 to 69', '70 or Older'],
         datasets: [{
-            label: 'Age group',
+            label: 'No. of People',
             data: ageGroupHolder,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -244,10 +107,9 @@ $(document).ready(function(){
     }
 });
 
-console.log('mc!', myChart)
-  }
+}
 
-  function targetGenderDataProcess(data) {
+  function getGenderDataProcess(data) {
     genderHolder = [0,0]
     for (i = 0; i < data.length; i++) {
       if (data[i].gender === 'F') {
@@ -278,11 +140,9 @@ console.log('mc!', myChart)
         maintainAspectRatio: false,
     }
   });
-  console.log('mc1!', myPieChart)
-  
   }
 
-  function targetInsuranceDataProcess(data) {
+  function getInsuranceDataProcess(data) {
     insuranceHolder = [0,0,0,0]
     secondaryInsuranceHolder = [0,0,0,0]
     for (i = 0; i < data.length; i++) {
@@ -347,10 +207,9 @@ console.log('mc!', myChart)
         maintainAspectRatio: false,
     }
 });
-console.log('mc2!', myRadarChart)
-  }
+ }
 
-function targetAdmissionDataProcess(data) {
+function getAdmissionDataProcess(data) {
     admissionHolder = [0,0]
     for (i = 0; i < data.length; i++) {
       if (data[i].type_of_admission === 'Emergency') {
@@ -360,7 +219,7 @@ function targetAdmissionDataProcess(data) {
         admissionHolder[1] += 1
       }
   }
-  console.log('ah', admissionHolder)
+
   let ctx3 = $('#myChart3');
   var myPieChart = new Chart(ctx3, {
     type: 'doughnut',
@@ -382,12 +241,69 @@ function targetAdmissionDataProcess(data) {
       maintainAspectRatio: false,
   }
 });
-  
-
-
-
-
 }
 
+function getCancerTypeDataProcess(data) {
+  cancerTypeHolder = [0,0,0,0,0,0]
+  for (i = 0; i < data.length; i++) {
+    if (data[i].ccs_diagnosis_description === 'Cancer of colon') {
+      cancerTypeHolder[0] += 1
+    }
+    else if (data[i].ccs_diagnosis_description === 'Cancer of pancreas') {
+      cancerTypeHolder[1] += 1
+    }
+    else if (data[i].ccs_diagnosis_description === 'Cancer of stomach') {
+      cancerTypeHolder[2] += 1
+    }
+    else if (data[i].ccs_diagnosis_description === 'Cancer of cervix') {
+      cancerTypeHolder[3] += 1
+    }
+    else if (data[i].ccs_diagnosis_description === 'Cancer of bronchus; lung') {
+      cancerTypeHolder[4] += 1
+    }
+    else {
+      cancerTypeHolder[5] += 1
+    }
+}
+  let ctx4 = $('#myChart4');
+  let myChart = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: ['Cancer of colon', 'Cancer of pancreas', 'Cancer of stomach', 'Cancer of cervix', 'Cancer of bronchus; lung', 'Other'],
+        datasets: [{
+            label: 'Common Cancer Types',
+            data: cancerTypeHolder,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(0, 255, 00, 0.1)',
+                'rgba(0,128,128, 0.2)',
+                'rgba(0,0,0,0.2)'
 
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(0, 255, 00, 0.1)',
+                'rgba(0,128,128, 0.2)',
+                'rgba(0,0,0,0.2)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+    }
+});
+}
 })
