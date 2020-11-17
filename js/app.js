@@ -190,8 +190,8 @@ $(document).ready(function(){
 
   function processData(data) {
     console.log('process', data)
-    // targetAgeGroupDataProcess(data)
-    // targetGenderDataProcess(data)
+    targetAgeGroupDataProcess(data)
+    targetGenderDataProcess(data)
   }
 
   function targetAgeGroupDataProcess(data) {
@@ -241,5 +241,36 @@ $(document).ready(function(){
 });
 
 console.log('mc!', myChart)
+  }
+
+  function targetGenderDataProcess(data) {
+    genderHolder = [0,0]
+    for (i = 0; i < data.length; i++) {
+      if (data[i].gender === 'F') {
+        genderHolder[0] += 1
+      }
+      else if (data[i].gender === 'M') {
+        genderHolder[1] += 1
+      }
+  }
+    let ctx1 = $('#myChart1');
+    var myPieChart = new Chart(ctx1, {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: genderHolder,
+          backgroundColor: [
+            'rgba(255,105,180,0.2)',
+            'rgba(54, 162, 235, 0.2)',
+        ],
+      }],
+      labels: [
+        'F',
+        'M'
+    ] 
+      },
+  });
+  console.log('mc1!', myPieChart)
+  
   }
 })
