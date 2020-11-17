@@ -79,7 +79,7 @@ $(document).ready(function(){
     data: {
         labels: ['30 to 49', '50 to 69', '70 or Older'],
         datasets: [{
-            label: 'Age group',
+            label: 'No. of People',
             data: ageGroupHolder,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
