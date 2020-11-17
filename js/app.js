@@ -171,7 +171,7 @@ $(document).ready(function(){
   //     console.log('json', json);
   // });
   // });
-  $("button").click(function(){
+ 
     //processData(testData)
     let url = `https://health.data.ny.gov/resource/gnzp-ekau.json?$where=UPPER(ccs_diagnosis_description) like '%25CANCER%25'&$limit=20`;
       console.log('url', url)
@@ -186,7 +186,7 @@ $(document).ready(function(){
         console.log('json', json);
         processData(json)
     });
-    });
+ 
 
   function processData(data) {
     console.log('process', data)
