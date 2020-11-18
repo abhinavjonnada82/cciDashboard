@@ -1,7 +1,7 @@
 // With the help of Chart.js, charts were implemented. Code structure, on load the Fetch makes a GET request to REST API
 //  Using the data obtained, analysis are performed on each specifc category such as gender, cancer type, age group & more.
 
-$(document).ready(function(){
+function getDashboard(){
     let url = `https://health.data.ny.gov/resource/gnzp-ekau.json?$where=UPPER(ccs_diagnosis_description) like '%25CANCER%25'&$limit=30`;
       fetch(url, {
         method: 'GET',
@@ -13,7 +13,7 @@ $(document).ready(function(){
     }).then(function(json) {
         processData(json)
     });
- 
+  }
 
   function processData(data) {
     getStatsDataProcess(data)
@@ -26,12 +26,12 @@ $(document).ready(function(){
 
 // Function to get stats
   function getStatsDataProcess(data) {
-    $(".content .numPatients").html(data.length);
+    document.getElementById("numPatients").innerHTML = data.length;
     totalCostHolder = 0
     for (i = 0; i < data.length; i++) {
       totalCostHolder = totalCostHolder + parseFloat((data[i].total_costs))
     }
-    $(".content .totalCosts").html(totalCostHolder);
+    document.getElementById("totalCosts").innerHTML = totalCostHolder;
 
   }
 // Function to display a chart for various age groups
@@ -300,4 +300,3 @@ function getCancerTypeDataProcess(data) {
     }
 });
 }
-})
