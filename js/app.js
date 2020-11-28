@@ -202,7 +202,6 @@ function getAdmissionDataProcess(data) {
 });
 }
 
-
 // Function to display a bar chart for different cancer types
 function getCancerTypeDataProcess(data) {
   let cancerTypes = {}
