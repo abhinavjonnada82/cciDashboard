@@ -31,32 +31,29 @@ function getDashboard(){
     for (i = 0; i < data.length; i++) {
       totalCostHolder = totalCostHolder + parseFloat((data[i].total_costs))
     }
-    document.getElementById("totalCosts").innerHTML = totalCostHolder;
+    document.getElementById("totalCosts").innerHTML = Math.floor(totalCostHolder);
 
   }
+
 // Function to display a chart for various age groups
   function getAgeGroupDataProcess(data) {
-    ageGroupHolder = [0,0,0]
-    for (i = 0; i < data.length; i++) {
-      if (data[i].age_group === '30 to 49') {
-        ageGroupHolder[0]++;
-      }
-      else if (data[i].age_group === '50 to 69') {
-        ageGroupHolder[1]++;
-      }
-      else {
-        ageGroupHolder[2]++;
-      }
-    }
+    let ageGroupHolder = {}
+    data.map(response => {
+      (response.age_group in ageGroupHolder) ? 
+        ageGroupHolder[response.age_group]++ : ageGroupHolder[response.age_group] = 1
+  })
+
+  const numOfAgeGroupCases = Object.keys(ageGroupHolder).map(i => ageGroupHolder[i]);
+  const ageGroupLabels = Object.keys(ageGroupHolder).map(i => i);
   
-  let ctx = $('#myChart');
+  let ctx = document.getElementById('myChart');
   let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['30 to 49', '50 to 69', '70 or Older'],
+        labels: ageGroupLabels,
         datasets: [{
             label: 'No. of People',
-            data: ageGroupHolder,
+            data: numOfAgeGroupCases,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -87,30 +84,27 @@ function getDashboard(){
 
 // Function to display a pie chart for gender specifc
   function getGenderDataProcess(data) {
-    genderHolder = [0,0]
-    for (i = 0; i < data.length; i++) {
-      if (data[i].gender === 'F') {
-        genderHolder[0]++;
-      }
-      else if (data[i].gender === 'M') {
-        genderHolder[1]++;
-      }
-  }
-    let ctx1 = $('#myChart1');
+    let genderHolder = {}
+    data.map(response => {
+      (response.gender in genderHolder) ? 
+        genderHolder[response.gender]++ : genderHolder[response.gender] = 1
+  })
+
+    const numOfGenderCases = Object.keys(genderHolder).map(i => genderHolder[i]);
+    const genderLabels = Object.keys(genderHolder).map(i => i);
+
+    let ctx1 = document.getElementById('myChart1');
     var myPieChart = new Chart(ctx1, {
       type: 'pie',
       data: {
         datasets: [{
-          data: genderHolder,
+          data: numOfGenderCases,
           backgroundColor: [
             'rgba(255,105,180,0.2)',
             'rgba(54, 162, 235, 0.2)',
         ],
       }],
-      labels: [
-        'F',
-        'M'
-    ] 
+      labels: genderLabels
       },
       options: {
         responsive: true,
@@ -119,56 +113,41 @@ function getDashboard(){
   });
   }
 
+
   // Function to display a radar chart for different insurance
   function getInsuranceDataProcess(data) {
-    insuranceHolder = [0,0,0,0]
-    secondaryInsuranceHolder = [0,0,0,0]
-    for (i = 0; i < data.length; i++) {
-      if (data[i].payment_typology_1 === 'Medicare') {
-        insuranceHolder[0]++;
-      }
-      else if (data[i].payment_typology_1 === 'Blue Cross/Blue Shield') {
-        insuranceHolder[1]++;
-      }
-      else if (data[i].payment_typology_1 === 'Private Health Insurance') {
-        insuranceHolder[2]++;
-      }
-      else {
-        insuranceHolder[3]++;
-      }
-  }
+    let insuranceHolder = {}
+    let secondaryInsuranceHolder = {}
 
-    for (i = 0; i < data.length; i++) {
-      if (data[i].payment_typology_2 !== null) {
-        if (data[i].payment_typology_2 === 'Medicare') {
-          secondaryInsuranceHolder[0]++;
-        }
-        else if (data[i].payment_typology_2 === 'Blue Cross/Blue Shield') {
-          secondaryInsuranceHolder[1]++;
-        }
-        else if (data[i].payment_typology_2 === 'Private Health Insurance') {
-          secondaryInsuranceHolder[2]++;
-        }
-        else {
-          secondaryInsuranceHolder[3]++;
-        }
-      }
-}
-  let ctx2 = $('#myChart2');
+    data.map(response => {
+      (response.payment_typology_1 in insuranceHolder) ? 
+       insuranceHolder[response.payment_typology_1]++ : insuranceHolder[response.payment_typology_1] = 1
+  })
+
+    data.map(response => {
+      (response.payment_typology_2 in secondaryInsuranceHolder) ? 
+      secondaryInsuranceHolder[response.payment_typology_2]++ : secondaryInsuranceHolder[response.payment_typology_2] = 1
+  })
+
+  const insuranceLabels = Object.keys(insuranceHolder).map(i => i);
+  const numOfInsuranceUsers = Object.keys(insuranceHolder).map(i => insuranceHolder[i]);
+  const numOfSecondaryInsuranceUsers = Object.keys(secondaryInsuranceHolder).map(i => secondaryInsuranceHolder[i]);
+
+  let ctx2 = document.getElementById('myChart2');
   var myRadarChart = new Chart(ctx2, {
     type: 'radar',
     data: {
-      labels: ['Medicare', 'Blue Cross/Blue Shield', 'Private Health Insurance', 'Other'],
+      labels: insuranceLabels,
       datasets: [{
         label: 'Payment Typology 1',
-        data: insuranceHolder,
+        data: numOfInsuranceUsers,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
       ],
     },
     {
       label: 'Payment Typology 2',
-      data: secondaryInsuranceHolder,
+      data: numOfSecondaryInsuranceUsers,
       backgroundColor: [
         'rgba(0, 255, 00, 0.1)' ],
   }]
@@ -193,31 +172,28 @@ function getDashboard(){
 
 // Function to display a doughnut chart for different entry
 function getAdmissionDataProcess(data) {
-    admissionHolder = [0,0]
-    for (i = 0; i < data.length; i++) {
-      if (data[i].type_of_admission === 'Emergency') {
-        admissionHolder[0]++;
-      }
-      else if (data[i].type_of_admission === 'Elective') {
-        admissionHolder[1]++;
-      }
-  }
+    let admissionHolder = {}
+    data.map(response => {
+      (response.type_of_admission in admissionHolder) ? 
+      admissionHolder[response.type_of_admission]++ : admissionHolder[response.type_of_admission] = 1
+  })
 
-  let ctx3 = $('#myChart3');
+  const numOfAdmissionTypes = Object.keys(admissionHolder).map(i => admissionHolder[i]);
+  const admissionLabels = Object.keys(admissionHolder).map(i => i);
+
+  let ctx3 = document.getElementById('myChart3');
   var myPieChart = new Chart(ctx3, {
     type: 'doughnut',
     data: {
       datasets: [{
-        data: admissionHolder,
+        data: numOfAdmissionTypes,
         backgroundColor: [
           'rgba(255,0,0,0.2)',
-          'rgba(255,255,0,0.2)'
+          'rgba(255,255,0,0.2)',
+          'rgba(128,0,0,0.2)',
       ],
     }],
-    labels: [
-      'Emergency',
-      'Elective'
-  ] 
+    labels: admissionLabels
     },
     options: {
       responsive: true,
@@ -226,54 +202,35 @@ function getAdmissionDataProcess(data) {
 });
 }
 
+
 // Function to display a bar chart for different cancer types
 function getCancerTypeDataProcess(data) {
+  let cancerTypes = {}
+  data.map(response => {
+      (response.ccs_diagnosis_description in cancerTypes) ? 
+        cancerTypes[response.ccs_diagnosis_description]++ : cancerTypes[response.ccs_diagnosis_description] = 1
+  })
 
-  // cancerTypeHolder = []
-  // cancerTypes = {'Cancer of colon': 0, 'Cancer of pancreas': 1, 'Cancer of stomach': 2, 'Cancer of cervix': 3, 'Cancer of bronchus lung': 4}
-  // for (i = 0; i <=  data.length; i++) {   
-  //   let val = data[i].ccs_diagnosis_description;
-  //   console.log('val', val)   
-  //   if(cancerTypes[val]) {   	
-  //     console.log('key',cancerTypes[val])
-  //     cancerTypeHolder[cancerTypes[val]]++;   
-  //   } 
-  cancerTypeHolder = [0,0,0,0,0,0]
-  for (i = 0; i < data.length; i++) {
-    if (data[i].ccs_diagnosis_description === 'Cancer of colon') {
-      cancerTypeHolder[0]++;
-    }
-    else if (data[i].ccs_diagnosis_description === 'Cancer of pancreas') {
-      cancerTypeHolder[1]++;
-    }
-    else if (data[i].ccs_diagnosis_description === 'Cancer of stomach') {
-      cancerTypeHolder[2]++;
-    }
-    else if (data[i].ccs_diagnosis_description === 'Cancer of cervix') {
-      cancerTypeHolder[3]++;
-    }
-    else if (data[i].ccs_diagnosis_description === 'Cancer of bronchus; lung') {
-      cancerTypeHolder[4]++;
-    }
-    else {
-      cancerTypeHolder[5]++;
-    }
-}
-  let ctx4 = $('#myChart4');
+  const numOfCancerCases = Object.keys(cancerTypes).map(i => cancerTypes[i]);
+  const cancerLabels = Object.keys(cancerTypes).map(i => i);
+
+  let ctx4 = document.getElementById('myChart4');
   let myChart = new Chart(ctx4, {
     type: 'bar',
     data: {
-        labels: ['Cancer of colon', 'Cancer of pancreas', 'Cancer of stomach', 'Cancer of cervix', 'Cancer of bronchus; lung', 'Other'],
+        labels: cancerLabels,
         datasets: [{
             label: 'Common Cancer Types',
-            data: cancerTypeHolder,
+            data: numOfCancerCases,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(0, 255, 00, 0.1)',
                 'rgba(0,128,128, 0.2)',
-                'rgba(0,0,0,0.2)'
+                'rgba(0,0,0,0.2)',
+                'rgba(128,0,0,0.2)',
+                'rgba(0,128,128,0.2)'
 
             ],
             borderColor: [
@@ -282,7 +239,9 @@ function getCancerTypeDataProcess(data) {
                 'rgba(255, 206, 86, 1)',
                 'rgba(0, 255, 00, 0.1)',
                 'rgba(0,128,128, 0.2)',
-                'rgba(0,0,0,0.2)'
+                'rgba(0,0,0,0.2)',
+                'rgba(128,0,0,0.2)',
+                'rgba(0,128,128,0.2)'
             ],
             borderWidth: 1
         }]
